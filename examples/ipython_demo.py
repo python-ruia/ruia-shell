@@ -20,4 +20,5 @@ ipshell = InteractiveShellEmbed.instance(
     banner1=banner, user_ns=namespace, exit_msg=exit_msg
 )
 
+
 ipshell()
