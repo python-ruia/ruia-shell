@@ -1,10 +1,11 @@
 [[source]]
-url = "https://pypi.org/simple"
+url = "https://pypi.douban.com/simple/"
 verify_ssl = true
 name = "pypi"
 
 [packages]
 ruia = ">=0.8.0"
+ipython = "*"
 
 [dev-packages]
 black = "*"
