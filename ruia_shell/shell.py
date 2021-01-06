@@ -11,10 +11,12 @@ class Shell:
     Shell class to debug Ruia crawler script.
     """
 
-    def __init__(self):
+    def __init__(self, python_shell: str = "ipython"):
         """
         Init var
+        :param python_shell: ipython only support
         """
+        self.banner = ""
 
     def fetch(self, url: str):
         """
