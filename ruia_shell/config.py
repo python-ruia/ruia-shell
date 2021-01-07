@@ -16,9 +16,9 @@ __________      .__                .__           .__  .__
 Available variables:
     response            :   ruia.Response
     request             :   ruia.Request
-    spider              :   ruia.Spider
 
 Available functions:
     fetch(url_or_req)   :   Fetch a URL or ruia.Request
-    r_help()            :   Tips for use
 """
+#     spider              :   ruia.Spider
+#    r_help()            :   Tips for use
