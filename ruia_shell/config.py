@@ -13,12 +13,14 @@ __________      .__                .__           .__  .__
  |____|_  /____/|__(____  / /____  >___|  /\___  >____/____/
         \/              \/       \/     \/     \/           
 
-Available variables:
+Available Objects   :
     response            :   ruia.Response
     request             :   ruia.Request
 
-Available functions:
-    fetch(url_or_req)   :   Fetch a URL or ruia.Request
+Available Functions :
+    attr_field          :   Extract attribute elements by using css selector or xpath
+    text_field          :   Extract text elements by using css selector or xpath
+    fetch               :   Fetch a URL or ruia.Request
 """
 #     spider              :   ruia.Spider
 #    r_help()            :   Tips for use
