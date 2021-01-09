@@ -8,13 +8,13 @@ import fire
 from ruia_shell.shell import Shell
 
 
-def ruia_shell(url: str):
+def ruia_shell(url_or_request):
     """
-    Provide an easy way to debug the Ruia script.
-    :param url:
+    Start a Ruia shell
+    :param url_or_request:
     :return:
     """
-    Shell().start(url)
+    Shell().start(url_or_request)
 
 
 def execute():

@@ -7,6 +7,7 @@ name = "pypi"
 ruia = ">=0.8.0"
 ipython = "*"
 fire = "*"
+nest-asyncio = "*"
 
 [dev-packages]
 black = "*"

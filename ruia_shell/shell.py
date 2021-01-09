@@ -7,11 +7,15 @@ import logging
 
 from typing import Union
 
+import nest_asyncio
+
 from IPython.terminal.embed import InteractiveShellEmbed
 from IPython.terminal.ipapp import load_default_config
-from ruia import AttrField, Request, Response, TextField
+from ruia import AttrField, Request, Response, Spider, TextField
 
 from ruia_shell.config import BANNER
+
+nest_asyncio.apply()
 
 logging.getLogger("Ruia").setLevel(logging.WARNING)
 logging.getLogger("Request").setLevel(logging.WARNING)
@@ -38,7 +42,9 @@ class Shell:
     Shell class to debug Ruia crawler script.
     """
 
-    def __init__(self, user_ns: dict = None, python_shell: str = "ipython"):
+    def __init__(
+        self, spider: Spider = None, user_ns: dict = None, python_shell: str = "ipython"
+    ):
         """
         Init var
         :param user_ns: user namespace,  set the default value to `None`
@@ -47,12 +53,16 @@ class Shell:
         self.banner = BANNER
         self.user_ns = user_ns or {}
         self.python_shell = python_shell
-        self.fetch = lambda x, y: asyncio.get_event_loop().run_until_complete(
-            self.async_fetch(x, y)
-        )
+        self.spider = spider
+        if self.spider:
+            loop = spider.loop
+        else:
+            loop = asyncio.get_event_loop()
+
+        self.fetch = lambda x, y=None: loop.run_until_complete(self.async_fetch(x, y))
 
     async def async_fetch(
-        self, url_or_request: Union[Request, str], response: Response = None
+        self, url_or_request: Union[Request, str], response: Response = None,
     ):
         """
         Fetch target URL
@@ -115,5 +125,17 @@ class Shell:
         start_python_console(user_ns=self.user_ns, banner=self.banner)
 
 
-if __name__ == "__main__":
-    Shell().start("https://movie.douban.com/top250")
+def inspect_ruia(
+    spider: Spider, url_or_request: Union[Request, str], response: Response = None
+):
+    """
+    Debugging in Ruia script
+    :param spider:
+    :param url_or_request:
+    :param response:
+    :return:
+    """
+    shell = Shell(spider)
+    shell.fetch(url_or_request, response)
+    # start python shell
+    start_python_console(user_ns=shell.user_ns, banner=shell.banner)
