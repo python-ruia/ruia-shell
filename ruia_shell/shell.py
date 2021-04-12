@@ -7,6 +7,7 @@ import logging
 
 from typing import Union
 
+import aiohttp
 import nest_asyncio
 
 from IPython.terminal.embed import InteractiveShellEmbed
@@ -70,19 +71,21 @@ class Shell:
         :param response:
         :return:
         """
-        if isinstance(url_or_request, Request):
-            request: Request = url_or_request
-        else:
-            request: Request = Request(url=url_or_request)
+        async with aiohttp.ClientSession() as session:
+            if isinstance(url_or_request, Request):
+                request: Request = url_or_request
+                request.request_session = session
+            else:
+                request: Request = Request(url=url_or_request, request_session=session)
 
-        if response is None:
-            response: Response = await request.fetch()
+            if response is None:
+                response: Response = await request.fetch()
 
-        # process response
-        response.html = await response.text()
-        response.etree = response.html_etree(response.html)
+            # process response
+            response.html = await response.text()
+            response.etree = response.html_etree(response.html)
 
-        self.refresh_user_ns(request, response)
+            self.refresh_user_ns(request, response)
 
     def refresh_user_ns(self, request: Request, response: Response):
         """

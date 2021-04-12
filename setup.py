@@ -7,7 +7,7 @@ from setuptools import find_packages, setup
 
 setup(
     name="ruia-shell",
-    version="0.0.3",
+    version="0.0.4",
     description="A Ruia plugin for terminal debugging(IPython)",
     install_requires=["fire", "ruia>=0.8.0", "ipython", "nest_asyncio"],
     author="Howie Hu",
